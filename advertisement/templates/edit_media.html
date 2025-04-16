@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Media List for {{ device.device_name }}</title>
+</head>
+<body>
+    <h1>Edit Media List for {{ device.device_name }}</h1>
+
+    <ul>
+        {% for media in media_list %}
+        <li>
+            <p><strong>{{ media.media_type|title }}</strong>: {{ media.media_url }}</p>
+
+            {% if media.media_type == "image" %}
+                <img src="{{ MEDIA_URL }}{{ media.media_url }}" alt="Image" width="200">
+            {% elif media.media_type == "video" %}
+                <video width="320" height="240" controls>
+                    <source src="{{ MEDIA_URL }}{{ media.media_url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% endif %}
+
+            <form method="POST" action="{% url 'edit_media' media.id %}" enctype="multipart/form-data" style="margin-top: 10px;">
+                {% csrf_token %}
+                
+                <label>Replace File:</label>
+                <input type="file" name="new_media_file" required><br><br>
+
+                <label>Media Type:</label>
+                <select name="media_type" required>
+                    <option value="image" {% if media.media_type == "image" %}selected{% endif %}>Image</option>
+                    <option value="video" {% if media.media_type == "video" %}selected{% endif %}>Video</option>
+                </select><br><br>
+
+                <input type="submit" value="Update">
+            </form>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

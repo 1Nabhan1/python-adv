@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Media for {{ device.device_name }}</title>
+</head>
+<body>
+    <h1>Upload Media for {{ device.device_name }}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="media_file">Choose Media:</label>
+        <input type="file" name="media_file" required><br>
+
+        <label for="media_type">Media Type:</label>
+        <select name="media_type" required>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+        </select><br>
+
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
