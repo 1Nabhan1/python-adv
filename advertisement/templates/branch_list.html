@@ -1,0 +1,12 @@
+<!-- branch_list.html -->
+<h2>Branch List</h2>
+<!-- Branch Button -->
+ <a href="{% url 'add_branch' %}">Add Branch</a>
+<ul>
+    {% for branch in branches %}
+    <li>
+        {{ branch.branchName }} 
+        <a href="{% url 'update_branch' branch.id %}">Edit</a>
+    </li>
+    {% endfor %}
+</ul>

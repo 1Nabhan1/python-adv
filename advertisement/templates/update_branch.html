@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Branch</title>
+</head>
+<body>
+    <h2>Update Branch</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="branchName">Branch Name:</label>
+        <input type="text" id="branchName" name="branchName" value="{{ branch.branchName }}" required>
+        <button type="submit">Update</button>
+    </form>
+    <a href="{% url 'branch_list' %}">Back to Branch List</a>
+</body>
+</html>

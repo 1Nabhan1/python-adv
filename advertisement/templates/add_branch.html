@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Branch</title>
+</head>
+<body>
+    <h2>Add New Branch</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="branchName">Branch Name:</label>
+        <input type="text" id="branchName" name="branchName" required>
+        <button type="submit">Add Branch</button>
+    </form>
+    <a href="{% url 'branch_list' %}">Back to Branch List</a>
+</body>
+</html>

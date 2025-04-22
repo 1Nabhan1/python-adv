@@ -5,7 +5,7 @@ from rest_framework import status
 from ...models import Device
 from ...serializers import DeviceSerializer
 from django.http import JsonResponse
-from ...models import Device, Media
+from ...models import Device, Media, Branch
 
 # Create your views here.
 
@@ -35,7 +35,7 @@ class MediaFetch(APIView):
 
             # Prepare media data to return in response
             media_data = [
-                {"media_url": media.media_url, "media_type": media.media_type}
+                {"media_url": media.media_file.url, "media_type": media.media_type, 'animation_type':media.animation_type,'duration':media.duration}
                 for media in media_list
             ]
 
@@ -44,7 +44,11 @@ class MediaFetch(APIView):
         except Device.DoesNotExist:
             return JsonResponse({"error": "Device not found."}, status=404)
         
-        
+class BranchFetch(APIView):
+        def get(self,request):
+         if request.method == 'GET':
+            branches = Branch.objects.all().values('id', 'branchName')
+            return JsonResponse(list(branches), safe=False)    
         
         
             

@@ -9,27 +9,48 @@
     <ul>
         {% for media in media_list %}
         <li>
-            <p><strong>{{ media.media_type|title }}</strong>: {{ media.media_url }}</p>
+            <p><strong>{{ media.media_type|title }}</strong>: 
+                {% if media.media_file %}
+                    {{ media.media_file.name }}  <!-- Display file name if it exists -->
+                {% else %}
+                    No media file uploaded <!-- Display this message if no media file is associated -->
+                {% endif %}
+            </p>
 
-            {% if media.media_type == "image" %}
-                <img src="{{ MEDIA_URL }}{{ media.media_url }}" alt="Image" width="200">
-            {% elif media.media_type == "video" %}
-                <video width="320" height="240" controls>
-                    <source src="{{ MEDIA_URL }}{{ media.media_url }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+            {% if media.media_file %}
+                {% if media.media_type == "image" %}
+                    <img src="{{ media.media_file.url }}" alt="Image" width="200">
+                {% elif media.media_type == "video" %}
+                    <video width="320" height="240" controls>
+                        <source src="{{ media.media_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            {% else %}
+                <p>No media file available</p>  <!-- Display a message when no file is available -->
             {% endif %}
 
             <form method="POST" action="{% url 'edit_media' media.id %}" enctype="multipart/form-data" style="margin-top: 10px;">
                 {% csrf_token %}
                 
                 <label>Replace File:</label>
-                <input type="file" name="new_media_file" required><br><br>
+                <input type="file" name="new_media_file" {% if not media.media_file %} required {% endif %}><br><br>
 
                 <label>Media Type:</label>
                 <select name="media_type" required>
                     <option value="image" {% if media.media_type == "image" %}selected{% endif %}>Image</option>
                     <option value="video" {% if media.media_type == "video" %}selected{% endif %}>Video</option>
+                </select><br>
+
+                <label for="duration">Duration (in seconds):</label> 
+                <input value= "{{ media.duration }}" type="number" name="duration" required min="1" max="20"><br>
+        
+                <label>Animation Type:</label>
+                <select name="animation_type" required>
+                    <option value="fade in" {% if media.animation_type == "fade in" %}selected{% endif %}>Fade In</option>
+                    <option value="zoom" {% if media.animation_type == "zoom" %}selected{% endif %}>Zoom</option>
+                    <option value="rotate" {% if media.animation_type == "rotate" %}selected{% endif %}>Rotate</option>
+                    <option value="slide" {% if media.animation_type == "slide" %}selected{% endif %}>Slide</option>
                 </select><br><br>
 
                 <input type="submit" value="Update">

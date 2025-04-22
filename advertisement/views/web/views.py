@@ -1,12 +1,39 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from ...models import Device
-from ...models import Device, Media
+from ...models import Device, Media, Branch
 from django.conf import settings
 import os
+from django.http import HttpResponse
 
 def device_list_view(request):
     devices = Device.objects.all()
     return render(request, 'device_list.html', {'devices': devices})
+
+def branch_list(request):
+    branches = Branch.objects.all()
+    return render(request, 'branch_list.html', {'branches': branches})
+
+def add_branch(request):
+    if request.method == 'POST':
+        branch_name = request.POST.get('branchName')
+        if branch_name:
+            Branch.objects.create(branchName=branch_name)
+            return redirect('branch_list')
+    return render(request, 'add_branch.html')
+
+def update_branch(request, branch_id):
+    branch = get_object_or_404(Branch, id=branch_id)
+
+    if request.method == 'POST':
+        new_name = request.POST.get('branchName')
+        if new_name:
+            branch.branchName = new_name
+            branch.save()
+            return redirect('branch_list')  # or wherever you want to redirect
+        else:
+            return HttpResponse("Branch name cannot be empty.")
+
+    return render(request, 'update_branch.html', {'branch': branch})
 
 
 def update_device(request, device_id):
@@ -35,21 +62,11 @@ def upload_media(request, device_id):
         # Handle media file upload for the device
         media_file = request.FILES['media_file']
         media_type = request.POST.get('media_type', 'image')  # or 'video', etc.
-        
-        # Save the file to the media directory
-        media_dir = os.path.join(settings.MEDIA_ROOT, 'device_media')  # Or any sub-directory you prefer
-        if not os.path.exists(media_dir):
-            os.makedirs(media_dir)
-
-        # Save the file to the correct path
-        file_path = os.path.join(media_dir, media_file.name)
-        with open(file_path, 'wb+') as destination:
-            for chunk in media_file.chunks():
-                destination.write(chunk)
-
-        # Save the media record to the database
-        media = Media(device=device, media_url=f'device_media/{media_file.name}', media_type=media_type)
-        media.save()
+        animation_type = request.POST.get('animation_type','fede in')
+        duration = request.POST.get('duration',0)
+        # Create a Media instance and save it to the database
+        media = Media(device=device, media_file=media_file, media_type=media_type, animation_type = animation_type, duration = duration)
+        media.save()  # Django will automatically handle the file storage
 
         return redirect('device_list')  # Redirect to device list or wherever needed
 
@@ -58,8 +75,12 @@ def upload_media(request, device_id):
 def edit_media_list(request, device_id):
     device = get_object_or_404(Device, id=device_id)
     media_list = Media.objects.filter(device=device)
-    return render(request, 'edit_media.html', {'device': device, 'media_list': media_list,'MEDIA_URL': settings.MEDIA_URL})
-
+    
+    # Pass media_list and MEDIA_URL to the template
+    return render(request, 'edit_media.html', {
+        'device': device, 
+        'media_list': media_list,
+    })
 
 def edit_media(request, media_id):
     media = get_object_or_404(Media, id=media_id)
@@ -67,11 +88,12 @@ def edit_media(request, media_id):
     if request.method == 'POST':
         new_file = request.FILES.get('new_media_file')
         new_type = request.POST.get('media_type')  # <--- grab new type from form
-
+        new_animation = request.POST.get('animation_type')
+        new_duration = request.POST.get('duration')
         # Handle new file upload
         if new_file:
             # Delete old file if it exists
-            old_file_path = os.path.join(settings.MEDIA_ROOT, str(media.media_url))
+            old_file_path = os.path.join(settings.MEDIA_ROOT, str(media.media_file.name))  # Use media_file.name
             if os.path.exists(old_file_path):
                 os.remove(old_file_path)
 
@@ -85,13 +107,16 @@ def edit_media(request, media_id):
                 for chunk in new_file.chunks():
                     destination.write(chunk)
 
-            # Update media URL in DB
-            media.media_url = f'device_media/{new_file_name}'
+            # Update media_file in DB (media_url was replaced by media_file)
+            media.media_file.name = f'device_media/{new_file_name}'
 
         # Always update media type from the form
         if new_type in dict(Media.MEDIA_TYPE_CHOICES):
             media.media_type = new_type
-
+        if new_animation in dict(Media.ANIMATION_TYPE_CHOICES):
+            media.animation_type = new_animation
+        if new_duration :
+            media.duration = new_duration
         media.save()
 
     return redirect('edit_media_list', device_id=media.device.id)
