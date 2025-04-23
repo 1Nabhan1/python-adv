@@ -64,8 +64,9 @@ def upload_media(request, device_id):
         media_type = request.POST.get('media_type', 'image')  # or 'video', etc.
         animation_type = request.POST.get('animation_type','fede in')
         duration = request.POST.get('duration',0)
+        isAudio = request.POST.get('isAudio',1)
         # Create a Media instance and save it to the database
-        media = Media(device=device, media_file=media_file, media_type=media_type, animation_type = animation_type, duration = duration)
+        media = Media(device=device, media_file=media_file, media_type=media_type, animation_type = animation_type, duration = duration, isAudio = isAudio)
         media.save()  # Django will automatically handle the file storage
 
         return redirect('device_list')  # Redirect to device list or wherever needed
@@ -90,6 +91,7 @@ def edit_media(request, media_id):
         new_type = request.POST.get('media_type')  # <--- grab new type from form
         new_animation = request.POST.get('animation_type')
         new_duration = request.POST.get('duration')
+        new_audio_opt = request.POST.get('isAudio')
         # Handle new file upload
         if new_file:
             # Delete old file if it exists
@@ -117,6 +119,8 @@ def edit_media(request, media_id):
             media.animation_type = new_animation
         if new_duration :
             media.duration = new_duration
+        if new_audio_opt:
+            media.isAudio = new_audio_opt
         media.save()
 
     return redirect('edit_media_list', device_id=media.device.id)

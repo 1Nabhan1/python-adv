@@ -1,24 +1,36 @@
+function toggleDurationField(form) {
+    const mediaTypeSelect = form.querySelector('select[name="media_type"]');
+    const durationField = form.querySelector('input[name="duration"]');
+    const durationLabel = form.querySelector('label[for="duration"]');
+    const audioContainer = form.querySelector('.audio-status-container');
 
-function toggleDurationField() {
-    const mediaType = document.querySelector('select[name="media_type"]').value;
-    const durationField = document.getElementById('duration');
-    const durationLabel = document.getElementById('duration-label');
-
-    if (mediaType === 'image') {
+    if (mediaTypeSelect.value === 'image') {
         durationField.required = true;
         durationField.disabled = false;
-        durationField.style.display = 'inline';  // Shows the duration field
-        durationLabel.style.display = 'inline';  // Shows the label
+        durationField.style.display = 'inline';
+        durationLabel.style.display = 'inline';
+        audioContainer.style.display = 'none'; // hide audio status for images
     } else {
         durationField.required = false;
         durationField.disabled = true;
-        durationField.style.display = 'none';  // Hides the duration field
-        durationLabel.style.display = 'none';  // Hides the label
-        durationField.value = '';  // Clears the field if hidden
+        durationField.style.display = 'none';
+        durationLabel.style.display = 'none';
+        durationField.value = '';
+        audioContainer.style.display = 'block'; // show audio status for videos
     }
 }
 
 window.addEventListener('DOMContentLoaded', function () {
-    toggleDurationField();  // Set initial state based on selected media type
-    document.querySelector('select[name="media_type"]').addEventListener('change', toggleDurationField);  // Toggle when media type changes
+    // Select all forms on the page (you can narrow it down using a class if needed)
+    const forms = document.querySelectorAll('form');
+
+    forms.forEach(function (form) {
+        const mediaTypeSelect = form.querySelector('select[name="media_type"]');
+        if (mediaTypeSelect) {
+            toggleDurationField(form);  // Set initial visibility
+            mediaTypeSelect.addEventListener('change', function () {
+                toggleDurationField(form);  // Update visibility on change
+            });
+        }
+    });
 });

@@ -17,7 +17,7 @@ class DeviceUploadView(APIView):
         if serializer.is_valid():
             # Save the device details into the database
             serializer.save()
-            return Response({"message": "Device details uploaded successfully!"}, status=status.HTTP_201_CREATED)
+            return Response({"message": "Device details uploaded successfully!", "Device": serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class MediaFetch(APIView):
@@ -35,11 +35,11 @@ class MediaFetch(APIView):
 
             # Prepare media data to return in response
             media_data = [
-                {"media_url": media.media_file.url, "media_type": media.media_type, 'animation_type':media.animation_type,'duration':media.duration}
+                {"media_url": media.media_file.url, "media_type": media.media_type, 'animation_type':media.animation_type,'duration':media.duration, 'is_audio':media.isAudio}
                 for media in media_list
             ]
 
-            return JsonResponse({"media": media_data}, status=200)
+            return JsonResponse({"media": media_data,"isUpdated":True}, status=200)
 
         except Device.DoesNotExist:
             return JsonResponse({"error": "Device not found."}, status=404)

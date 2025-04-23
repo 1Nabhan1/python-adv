@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Edit Media List for {{ device.device_name }}</h1>
-
+    {% load static %}
     <ul>
         {% for media in media_list %}
         <li>
@@ -41,9 +41,16 @@
                     <option value="image" {% if media.media_type == "image" %}selected{% endif %}>Image</option>
                     <option value="video" {% if media.media_type == "video" %}selected{% endif %}>Video</option>
                 </select><br>
-
-                <label for="duration">Duration (in seconds):</label> 
-                <input value= "{{ media.duration }}" type="number" name="duration" required min="1" max="20"><br>
+  
+    <div class="audio-status-container">
+        <label>Audio Status:</label>
+        <select name="isAudio" class="audio-status">
+            <option value="1" {% if media.isAudio == 1 %}selected{% endif %}>Audible</option>
+            <option value="0" {% if media.isAudio == 0 %}selected{% endif %}>Mute</option>
+        </select><br>
+    </div>
+                <label  for="duration">Duration (in seconds):</label> 
+                <input id="duration_{{ forloop.counter }}" value="{{ media.duration }}"  value= "{{ media.duration }}" type="number" name="duration" required min="1" max="20"><br>
         
                 <label>Animation Type:</label>
                 <select name="animation_type" required>
@@ -59,6 +66,6 @@
         <hr>
         {% endfor %}
     </ul>
-
+<script src="{% static 'javaScript/media.js' %}"></script>
 </body>
 </html>

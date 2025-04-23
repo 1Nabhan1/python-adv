@@ -16,9 +16,17 @@
             <option value="image">Image</option>
             <option value="video">Video</option>
         </select><br>
-        
-        <label id="duration-label" for="duration">Duration (in seconds):</label><br>
-        <input id="duration" type="number" name="duration" required min="1" max="20"><br>
+            <!-- Add the status field -->
+    <div class="audio-status-container">
+        <label>Audio Status:</label>
+        <select name="isAudio" class="audio-status">
+            <option value="1" {% if media.isAudio == 1 %}selected{% endif %}>Audible</option>
+            <option value="0" {% if media.isAudio == 0 %}selected{% endif %}>Mute</option>
+        </select><br>
+    </div>
+    </select><br>
+        <label id="duration-label" for="duration">Duration (in seconds):</label>
+        <input id="duration_{{ forloop.counter }}" type="number" name="duration" required min="1" max="20"><br>
         
         <label for="animation_type">Animation Type:</label>
         <select name="animation_type" required>
