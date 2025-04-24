@@ -1,10 +1,10 @@
 <form method="POST" action="{% url 'update_device' device.id %}">
     {% csrf_token %}
     <label for="device_name">Device Name:</label>
-    <input type="text" id="device_name" name="device_name" value="{{ device.device_name }}" required><br>
-
-    <label for="branch_name">Branch Name:</label>
-    <input type="text" id="branch_name" name="branch_name" value="{{ device.branch_name }}"><br>
+    <input type="text" id="device_name" name="device_name" value="{{ device.device_name }}" required readonly><br>
+   
+<label for="device_name">Branch Name:</label>
+    <input type="text" id="branch_name" name="branch_name" value="{{ device.branch.branchName }}"readonly><br>
 
     <!-- Add the status field -->
     <label for="status">Status:</label>

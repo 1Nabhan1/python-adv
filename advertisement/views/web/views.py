@@ -41,11 +41,10 @@ def update_device(request, device_id):
 
     if request.method == 'POST':
         device_name = request.POST.get('device_name')
-        branch_name = request.POST.get('branch_name')
+        branch_name = device.branch.branchName if device.branch else "No Branch"
         status = request.POST.get('status') == '1'  # True if 'Active', False if 'Blocked'
 
         device.device_name = device_name
-        device.branch_name = branch_name
         device.status = status  # Update the status
 
         device.save()  # Save the updated device object
