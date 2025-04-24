@@ -1,43 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/update_media.css' %}">
     <title>Upload Media for {{ device.device_name }}</title>
 </head>
 <body>
-    <h1>Upload Media for {{ device.device_name }}</h1>
-    {% load static %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="media_file">Choose Media:</label>
-        <input type="file" name="media_file" required><br>
+    <div class="container">
+        <h1>Upload Media for {{ device.device_name }}</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="media_file">Choose Media:</label>
+            <input type="file" name="media_file" required><br>
 
-        <label for="media_type">Media Type:</label>
-        <select name="media_type" required>
-            <option value="image">Image</option>
-            <option value="video">Video</option>
-        </select><br>
-            <!-- Add the status field -->
-    <div class="audio-status-container">
-        <label>Audio Status:</label>
-        <select name="isAudio" class="audio-status">
-            <option value="1" {% if media.isAudio == 1 %}selected{% endif %}>Audible</option>
-            <option value="0" {% if media.isAudio == 0 %}selected{% endif %}>Mute</option>
-        </select><br>
+            <label for="media_type">Media Type:</label>
+            <select name="media_type" required>
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+            </select><br>
+            
+            <!-- Audio Status Field -->
+            <div class="audio-status-container">
+                <label>Audio Status:</label>
+                <select name="isAudio" class="audio-status">
+                    <option value="1" {% if media.isAudio == 1 %}selected{% endif %}>Audible</option>
+                    <option value="0" {% if media.isAudio == 0 %}selected{% endif %}>Mute</option>
+                </select><br>
+            </div>
+
+            <label id="duration-label" for="duration">Duration (in seconds):</label>
+            <input id="duration_{{ forloop.counter }}" type="number" name="duration" required min="1" max="20"><br>
+            
+            <label for="animation_type">Animation Type:</label>
+            <select name="animation_type" required>
+                <option value="fade in">Fade in</option>
+                <option value="zoom">Zoom</option>
+                <option value="rotate">Rotate</option>
+                <option value="slide">Slide</option>
+            </select><br>
+
+            <input type="submit" value="Upload">
+        </form>
     </div>
-    </select><br>
-        <label id="duration-label" for="duration">Duration (in seconds):</label>
-        <input id="duration_{{ forloop.counter }}" type="number" name="duration" required min="1" max="20"><br>
-        
-        <label for="animation_type">Animation Type:</label>
-        <select name="animation_type" required>
-            <option value="fade in">Fade in</option>
-            <option value="zoom">Zoom</option>
-            <option value="rotate">Rotate</option>
-            <option value="slide">Slide</option>
-        </select><br>
 
-        <input type="submit" value="Upload">
-    </form>
-     <script src="{% static 'javaScript/media.js' %}"></script>
+    <script src="{% static 'javaScript/media.js' %}"></script>
 </body>
 </html>

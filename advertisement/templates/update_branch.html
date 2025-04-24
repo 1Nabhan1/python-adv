@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Branch</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_branch.css' %}">
 </head>
 <body>
-    <h2>Update Branch</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <label for="branchName">Branch Name:</label>
-        <input type="text" id="branchName" name="branchName" value="{{ branch.branchName }}" required>
-        <button type="submit">Update</button>
-    </form>
-    <a href="{% url 'branch_list' %}">Back to Branch List</a>
+    <div class="container">
+        <h2>Update Branch</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="branchName">Branch Name:</label>
+            <input type="text" id="branchName" name="branchName" value="{{ branch.branchName }}" required>
+            
+            <div class="button-container">
+                <button type="submit" class="btn submit-btn">Update</button>
+                <a href="{% url 'branch_list' %}" class="btn back-btn">Back to Branch List</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

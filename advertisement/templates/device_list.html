@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
     <title>Device List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/device_list.css' %}">
 </head>
 <body>
+
     <h1>Available Devices</h1>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Device Name</th>
-            <th>Branch Name</th>
-            <th>Orientation</th>
-            <th>Resolution</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        {% for device in devices %}
-        <tr>
-            <td>{{ device.id }}</td>
-            <td>{{ device.device_name }}</td>
-            <td>{{ device.branch.branchName }}</td>
-            <td>{{ device.orientation }}</td>
-            <td>{{ device.resolution }}</td>
-            <td>{{ device.status }}</td>
-            <td>
-                <!-- Edit Device Button -->
-                <a href="{% url 'update_device' device.id %}">Edit</a><br>
 
-                <!-- Edit Media List Button -->
-                <a href="{% url 'edit_media_list' device.id %}">Edit Media List</a><br>
-
-                <!-- Upload Media Button -->
-                <a href="{% url 'upload_media' device.id %}">Upload Media</a><br>
-
-                <!-- UBranch Button -->
-                <a href="{% url 'branch_list' %}">Branch List</a><br>
-
-            </td>
-        </tr>
-        {% endfor %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Device Name</th>
+                <th>Branch Name</th>
+                <th>Orientation</th>
+                <th>Resolution</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{ device.id }}</td>
+                <td>{{ device.device_name }}</td>
+                <td>{{ device.branch.branchName }}</td>
+                <td>{{ device.orientation }}</td>
+                <td>{{ device.resolution }}</td>
+                <td>
+                    {% if device.status %}
+                        <span style="color:green;">Active</span>
+                    {% else %}
+                        <span style="color:red;">Blocked</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'update_device' device.id %}">Edit</a>
+                    <a href="{% url 'edit_media_list' device.id %}">Edit Media List</a>
+                    <a href="{% url 'upload_media' device.id %}">Upload Media</a>
+                    <a href="{% url 'branch_list' %}">Branch List</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
 </body>
 </html>

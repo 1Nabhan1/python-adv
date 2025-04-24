@@ -1,0 +1,121 @@
+/* edit_media_list.css */
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to bottom, #eef2f3, #ffffff);
+    margin: 0;
+    padding: 40px 20px;
+    color: #2d3436;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 40px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.media-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.media-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.media-item p {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.media-item strong {
+    font-size: 18px;
+    color: #0984e3;
+}
+
+.media-item img,
+.media-item video {
+    display: block;
+    margin: 15px 0;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+form {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    color: #2d3436;
+}
+
+form input[type="file"],
+form select,
+form input[type="number"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    background-color: #f7f9fa;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    margin-top: 25px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #00b894;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+    background-color: #019875;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #ecf0f1;
+    margin: 40px 0;
+}
+
+@media screen and (max-width: 600px) {
+    .media-item {
+        padding: 20px;
+    }
+
+    form input[type="file"],
+    form select,
+    form input[type="number"],
+    form input[type="submit"] {
+        width: 100%;
+    }
+}

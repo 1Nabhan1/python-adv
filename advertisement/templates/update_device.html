@@ -1,3 +1,7 @@
+<head>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_device.css' %}">
+ <title> update device </title> </head>
 <form method="POST" action="{% url 'update_device' device.id %}">
     {% csrf_token %}
     <label for="device_name">Device Name:</label>

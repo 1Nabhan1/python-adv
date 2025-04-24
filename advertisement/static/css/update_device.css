@@ -1,0 +1,71 @@
+/* device_form.css */
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    color: #2d3436;
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 20px;
+    color: #34495e;
+}
+
+form input[type="text"],
+form select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+form input[readonly] {
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+}
+
+form input[type="submit"] {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #0984e3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0866c2;
+}
+
+@media screen and (max-width: 600px) {
+    form {
+        padding: 30px 20px;
+    }
+}

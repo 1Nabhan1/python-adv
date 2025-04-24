@@ -1,0 +1,76 @@
+/* upload_media.css */
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #2c3e50;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    color: #2980b9;
+    margin-bottom: 30px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+    max-width: 550px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: #34495e;
+}
+
+form input[type="file"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #dcdde1;
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+    background-color: #219150;
+}
+
+.audio-status-container {
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    form {
+        padding: 25px 20px;
+    }
+}

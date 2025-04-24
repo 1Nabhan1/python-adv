@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/edit_media.css' %}">
     <title>Edit Media List for {{ device.device_name }}</title>
 </head>
 <body>
     <h1>Edit Media List for {{ device.device_name }}</h1>
-    {% load static %}
+    
     <ul>
         {% for media in media_list %}
         <li>
@@ -49,7 +51,7 @@
             <option value="0" {% if media.isAudio == 0 %}selected{% endif %}>Mute</option>
         </select><br>
     </div>
-                <label  for="duration">Duration (in seconds):</label> 
+                <label  for="duration">Duration (in seconds):</label><br> 
                 <input id="duration_{{ forloop.counter }}" value="{{ media.duration }}"  value= "{{ media.duration }}" type="number" name="duration" required min="1" max="20"><br>
         
                 <label>Animation Type:</label>

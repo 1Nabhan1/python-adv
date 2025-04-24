@@ -1,12 +1,28 @@
-<!-- branch_list.html -->
-<h2>Branch List</h2>
-<!-- Branch Button -->
- <a href="{% url 'add_branch' %}">Add Branch</a>
-<ul>
-    {% for branch in branches %}
-    <li>
-        {{ branch.branchName }} 
-        <a href="{% url 'update_branch' branch.id %}">Edit</a>
-    </li>
-    {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branch List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/branch_list.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Branch List</h2>
+        
+        <!-- Add Branch Button -->
+        <a href="{% url 'add_branch' %}" class="btn add-btn">Add Branch</a>
+        
+        <!-- Branch List -->
+        <ul class="branch-list">
+            {% for branch in branches %}
+            <li class="branch-item">
+                <span class="branch-name">{{ branch.branchName }}</span>
+                <a href="{% url 'update_branch' branch.id %}" class="btn edit-btn">Edit</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
